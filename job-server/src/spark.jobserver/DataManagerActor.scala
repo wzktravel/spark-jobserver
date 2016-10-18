@@ -1,9 +1,8 @@
 package spark.jobserver
 
 import ooyala.common.akka.InstrumentedActor
-import spark.jobserver.io.DataFileDAO
-import spark.jobserver.util.JarUtils
 import org.joda.time.DateTime
+import spark.jobserver.io.DataFileDAO
 
 object DataManagerActor {
   // Messages to DataManager actor
@@ -32,7 +31,7 @@ class DataManagerActor(fileDao: DataFileDAO) extends InstrumentedActor {
 
     case StoreData(aName, aBytes) =>
       logger.info("Storing data in file prefix {}, {} bytes", aName, aBytes.size)
-      val uploadTime = DateTime.now()
+      val uploadTime = new DateTime()
       val fName = fileDao.saveFile(aName, uploadTime, aBytes)
       sender ! Stored(fName)
   }

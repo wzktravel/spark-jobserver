@@ -5,7 +5,7 @@ object Versions {
   // USED TO BE: 1.3.0/1.2.1 (depending on jdk version)
   lazy val typeSafeConfig = "1.0.2"
   lazy val metrics = "2.2.0"
-  lazy val jodaTime = "2.9.3"
+  lazy val jodaTime = "1.6"
   lazy val jodaConvert = "1.8.1"
    // CDH 5.3/5.4 comes with akka 2.2.3-shaded-protobuf preinstalled, so we should build against that version.
   lazy val akka = "2.2.3-shaded-protobuf"
@@ -20,6 +20,7 @@ object Versions {
   lazy val netty =  "4.0.29.Final"
   lazy val slick = "3.1.1"
   lazy val h2 = "1.3.176"
+  lazy val mysql = "5.1.36"
   lazy val commons = "1.4"
   lazy val flyway = "3.2.1"
   lazy val logback = "1.0.7"

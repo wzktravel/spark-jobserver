@@ -1,13 +1,13 @@
 package spark.jobserver
 
+import java.nio.file.{Files, Paths}
+
 import akka.actor.ActorRef
 import akka.util.Timeout
 import ooyala.common.akka.InstrumentedActor
-import spark.jobserver.io.{JobDAOActor, JobDAO}
-import spark.jobserver.util.JarUtils
 import org.joda.time.DateTime
-
-import java.nio.file.{Files, Paths}
+import spark.jobserver.io.JobDAOActor
+import spark.jobserver.util.JarUtils
 
 // Messages to JarManager actor
 
@@ -35,7 +35,7 @@ class JarManager(jobDao: ActorRef) extends InstrumentedActor {
   val daoAskTimeout = Timeout(3 seconds)
 
   private def saveJar(appName: String, jarBytes: Array[Byte]): Unit = {
-    val uploadTime = DateTime.now()
+    val uploadTime = new DateTime()
     jobDao ! JobDAOActor.SaveJar(appName, uploadTime, jarBytes)
   }
 

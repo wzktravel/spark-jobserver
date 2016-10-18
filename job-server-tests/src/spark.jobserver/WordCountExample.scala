@@ -2,11 +2,10 @@ package spark.jobserver
 
 import com.typesafe.config.{Config, ConfigFactory}
 import org.apache.spark._
-import org.apache.spark.SparkContext._
 import org.scalactic._
-import scala.util.Try
-
 import spark.jobserver.api.{SparkJob => NewSparkJob, _}
+
+import scala.util.Try
 
 /**
  * A super-simple Spark job example that implements the SparkJob trait and can be submitted to the job server.
@@ -44,7 +43,8 @@ object WordCountExample extends SparkJob {
  * - the config input no longer is mixed with context settings, it purely has the job input
  * - the job could parse the jobId and other environment vars from JobEnvironment
  */
-object WordCountExampleNewApi extends NewSparkJob {
+object
+WordCountExampleNewApi extends NewSparkJob {
   type JobData = Seq[String]
   type JobOutput = collection.Map[String, Long]
 

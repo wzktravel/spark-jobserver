@@ -48,7 +48,8 @@ object Dependencies {
     "com.typesafe.slick" %% "slick" % slick,
     "com.h2database" % "h2" % h2,
     "commons-dbcp" % "commons-dbcp" % commons,
-    "org.flywaydb" % "flyway-core" % flyway
+    "org.flywaydb" % "flyway-core" % flyway,
+    "mysql" % "mysql-connector-java" % mysql
   )
 
   lazy val logbackDeps = Seq(
