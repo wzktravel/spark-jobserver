@@ -158,7 +158,7 @@ class JobManagerActor(contextConfig: Config) extends InstrumentedActor {
 
     case KillJob(jobId: String) => {
       jobContext.sparkContext.cancelJobGroup(jobId)
-      statusActor ! JobKilled(jobId, new DateTime()())
+      statusActor ! JobKilled(jobId, new DateTime())
     }
 
     case SparkContextStatus => {
@@ -236,7 +236,7 @@ class JobManagerActor(contextConfig: Config) extends InstrumentedActor {
     statusActor ! Subscribe(jobId, sender, events)
 
     val jarInfo = JarInfo(appName, lastUploadTime.get)
-    val jobInfo = JobInfo(jobId, contextName, jarInfo, classPath, new DateTime()(), None, None)
+    val jobInfo = JobInfo(jobId, contextName, jarInfo, classPath, new DateTime(), None, None)
 
     Some(getJobFuture(jobContainer, jobInfo, jobConfig, sender, jobContext, sparkEnv))
   }
@@ -278,7 +278,7 @@ class JobManagerActor(contextConfig: Config) extends InstrumentedActor {
           job.validate(jobC, jobEnv, jobConfig) match {
             case Bad(reasons) =>
               val err = new Throwable(reasons.toString)
-              statusActor ! JobValidationFailed(jobId, new DateTime()(), err)
+              statusActor ! JobValidationFailed(jobId, new DateTime(), err)
               throw err
             case Good(jobData) =>
               statusActor ! JobStarted(jobId: String, jobInfo)
@@ -302,7 +302,7 @@ class JobManagerActor(contextConfig: Config) extends InstrumentedActor {
       }
     }(executionContext).andThen {
       case Success(result: Any) =>
-        statusActor ! JobFinished(jobId, new DateTime()())
+        statusActor ! JobFinished(jobId, new DateTime())
         // TODO: If the result is Stream[_] and this is running with context-per-jvm=true configuration
         // serializing a Stream[_] blob across process boundaries is not desirable.
         // In that scenario an enhancement is required here to chunk stream results back.
@@ -317,7 +317,7 @@ class JobManagerActor(contextConfig: Config) extends InstrumentedActor {
         // Wrapping the error inside a RuntimeException to handle the case of throwing custom exceptions.
         val wrappedError = wrapInRuntimeException(error)
         // If and only if job validation fails, JobErroredOut message is dropped silently in JobStatusActor.
-        statusActor ! JobErroredOut(jobId, new DateTime()(), wrappedError)
+        statusActor ! JobErroredOut(jobId, new DateTime(), wrappedError)
         logger.error("Exception from job " + jobId + ": ", error)
     }(executionContext).andThen {
       case _ =>
