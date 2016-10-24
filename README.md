@@ -3,7 +3,7 @@
 [![Join the chat at https://gitter.im/spark-jobserver/spark-jobserver](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/spark-jobserver/spark-jobserver?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
-** 现在看到的是我们内部优化后的代码，在原来代码基础上做了以下优化: **
+**现在看到的是我们内部优化后的代码，在原来代码基础上做了以下优化:**
 
 1. 将spark-jobserver中akka版本降级到CDH5.7中akka版本，使用[https://github.com/bjoernlohrmann/spark-jobserver.git](https://github.com/bjoernlohrmann/spark-jobserver.git)的`0.7.0-SNAPSHOT_cdh-5.7`分支。
 
