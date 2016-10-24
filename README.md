@@ -3,46 +3,48 @@
 [![Join the chat at https://gitter.im/spark-jobserver/spark-jobserver](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/spark-jobserver/spark-jobserver?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
-这是我们内部优化后的分支, 在原来代码基础上做了以下优化:
+** 现在看到的是我们内部优化后的代码, 在原来代码基础上做了以下优化: **
 
 1. 将spark-jobserver中akka版本降级到CDH5.7中akka版本, 使用[https://github.com/bjoernlohrmann/spark-jobserver.git](https://github.com/bjoernlohrmann/spark-jobserver.git)的`0.7.0-SNAPSHOT_cdh-5.7`分支。
 
-  参考:
-  - [https://github.com/spark-jobserver/spark-jobserver/issues/394](https://github.com/spark-jobserver/spark-jobserver/issues/394)
-  - [https://github.com/spark-jobserver/spark-jobserver/issues/592](https://github.com/spark-jobserver/spark-jobserver/issues/592)
+    参考:
+    - [https://github.com/spark-jobserver/spark-jobserver/issues/394](https://github.com/spark-jobserver/spark-jobserver/issues/394)
+    - [https://github.com/spark-jobserver/spark-jobserver/issues/592](https://github.com/spark-jobserver/spark-jobserver/issues/592)
 
 2. spark-jobserver中joda-time版本(2.9.3)与CDH5.7中joda-time版本(1.6)版本冲突, 运行时会出现`java.lang.NoSuchMethodError: org.joda.time.DateTime.now()`异常, 将spark-jobserver中joda-time版本降级到1.6。
 
 3. 添加使用mysql作为数据库, 使用时在jobserver配置下添加以下内容:
 
-  ```
-  sqldao {
-    # Slick database driver, full classpath
-    slick-driver=slick.driver.MySQLDriver
-    # JDBC driver, full classpath
-    jdbc-driver=com.mysql.jdbc.Driver
-    jdbc {
-      url="jdbc:mysql://db_host/spark_jobserver?characterEncoding=UTF-8"
-      user="secret"
-      password="secret"
+    ```
+    sqldao {
+      # Slick database driver, full classpath
+      slick-driver=slick.driver.MySQLDriver
+      # JDBC driver, full classpath
+      jdbc-driver=com.mysql.jdbc.Driver
+      jdbc {
+        url="jdbc:mysql://db_host/spark_jobserver?characterEncoding=UTF-8"
+        user="secret"
+        password="secret"
+      }
+      dbcp {
+        maxactive = 20
+        maxidle = 10
+        initialsize = 10
+      }
     }
-    dbcp {
-      maxactive = 20
-      maxidle = 10
-      initialsize = 10
-    }
-  }
-  ```
+    ```
 
-  在整个配置文件的根路径(最外层)添加
+    在整个配置文件的根路径(最外层)添加
 
-  ```
-  flyway.locations="db/mysql/migration"
-  ```
+    ```
+    flyway.locations="db/mysql/migration"
+    ```
 
 4. 修复提交job后无法查看job信息和结果的问题, 参见[https://github.com/spark-jobserver/spark-jobserver/issues/516](https://github.com/spark-jobserver/spark-jobserver/issues/516)
 
+<br>
 **以下是原文内容**
+<br>
 
 spark-jobserver provides a RESTful interface for submitting and managing [Apache Spark](http://spark-project.org) jobs, jars, and job contexts.
 This repo contains the complete Spark job server project, including unit tests and deploy scripts.
