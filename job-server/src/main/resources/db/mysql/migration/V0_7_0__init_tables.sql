@@ -2,7 +2,7 @@ CREATE TABLE JARS (
   JAR_ID       BIGINT             AUTO_INCREMENT NOT NULL PRIMARY KEY,
   APP_NAME     VARCHAR(255)       NOT NULL,
   UPLOAD_TIME  TIMESTAMP          NOT NULL,
-  JAR          BLOB              NOT NULL
+  JAR          LONGBLOB              NOT NULL
 );
 
 CREATE TABLE JOBS (
